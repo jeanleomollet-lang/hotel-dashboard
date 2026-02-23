@@ -1,90 +1,35 @@
 import { FinancialData } from "@/types/hotel";
 
+// N-1 : Mars 2024 — Février 2025
+export const monthlyFinancialsN1: FinancialData[] = [
+  { date: "2024-03-01", revenue: { rooms: 115200, foodAndBeverage: 32400, spa: 7500, events: 5000, parking: 2800, minibar: 2500, laundry: 1200, other: 5100, total: 171700 }, expenses: { salaries: 55000, utilities: 13400, maintenance: 8000, supplies: 5800, marketing: 5400, commissions: 17200, insurance: 3000, taxes: 11600, depreciation: 8000, other: 4500, total: 131900 }, profit: { grossProfit: 78000, operatingProfit: 39800, netProfit: 28600, grossMargin: 45.4, operatingMargin: 23.2, netMargin: 16.7, ebitda: 47800 }, cashflow: { opening: 98000, inflows: 171700, outflows: 131900, closing: 137800, bankBalance: 137800 } },
+  { date: "2024-04-01", revenue: { rooms: 154200, foodAndBeverage: 35600, spa: 9000, events: 6600, parking: 3300, minibar: 2900, laundry: 1450, other: 5900, total: 218950 }, expenses: { salaries: 58500, utilities: 13000, maintenance: 8600, supplies: 6500, marketing: 5800, commissions: 20600, insurance: 3000, taxes: 13800, depreciation: 8000, other: 4900, total: 142700 }, profit: { grossProfit: 104800, operatingProfit: 76250, netProfit: 55800, grossMargin: 47.9, operatingMargin: 34.8, netMargin: 25.5, ebitda: 84250 }, cashflow: { opening: 137800, inflows: 218950, outflows: 142700, closing: 214050, bankBalance: 214050 } },
+  { date: "2024-05-01", revenue: { rooms: 181800, foodAndBeverage: 41200, spa: 11400, events: 8100, parking: 3800, minibar: 3500, laundry: 1750, other: 6600, total: 258150 }, expenses: { salaries: 62000, utilities: 12400, maintenance: 9600, supplies: 7200, marketing: 6500, commissions: 24200, insurance: 3000, taxes: 15600, depreciation: 8000, other: 5200, total: 153700 }, profit: { grossProfit: 132400, operatingProfit: 104450, netProfit: 76700, grossMargin: 51.3, operatingMargin: 40.5, netMargin: 29.7, ebitda: 112450 }, cashflow: { opening: 214050, inflows: 258150, outflows: 153700, closing: 318500, bankBalance: 318500 } },
+  { date: "2024-06-01", revenue: { rooms: 220800, foodAndBeverage: 46200, spa: 14000, events: 9600, parking: 4400, minibar: 3900, laundry: 2000, other: 7800, total: 308700 }, expenses: { salaries: 68000, utilities: 13800, maintenance: 10400, supplies: 8000, marketing: 7200, commissions: 28800, insurance: 3000, taxes: 17800, depreciation: 8000, other: 5800, total: 170800 }, profit: { grossProfit: 168600, operatingProfit: 137900, netProfit: 101200, grossMargin: 54.6, operatingMargin: 44.7, netMargin: 32.8, ebitda: 145900 }, cashflow: { opening: 318500, inflows: 308700, outflows: 170800, closing: 456400, bankBalance: 456400 } },
+  { date: "2024-07-01", revenue: { rooms: 280800, foodAndBeverage: 57600, spa: 17200, events: 11800, parking: 5000, minibar: 4800, laundry: 2600, other: 9400, total: 389200 }, expenses: { salaries: 74000, utilities: 15800, maintenance: 11200, supplies: 8800, marketing: 7600, commissions: 35600, insurance: 3000, taxes: 21200, depreciation: 8000, other: 6500, total: 191700 }, profit: { grossProfit: 228800, operatingProfit: 197500, netProfit: 144800, grossMargin: 58.8, operatingMargin: 50.7, netMargin: 37.2, ebitda: 205500 }, cashflow: { opening: 456400, inflows: 389200, outflows: 191700, closing: 653900, bankBalance: 653900 } },
+  { date: "2024-08-01", revenue: { rooms: 302400, foodAndBeverage: 61200, spa: 18400, events: 12600, parking: 5400, minibar: 5200, laundry: 2800, other: 10000, total: 418000 }, expenses: { salaries: 77500, utilities: 17200, maintenance: 12000, supplies: 9400, marketing: 8000, commissions: 39000, insurance: 3000, taxes: 22800, depreciation: 8000, other: 6900, total: 203800 }, profit: { grossProfit: 248200, operatingProfit: 214200, netProfit: 157000, grossMargin: 59.4, operatingMargin: 51.2, netMargin: 37.6, ebitda: 222200 }, cashflow: { opening: 653900, inflows: 418000, outflows: 203800, closing: 868100, bankBalance: 868100 } },
+  { date: "2024-09-01", revenue: { rooms: 201600, foodAndBeverage: 42800, spa: 12600, events: 8800, parking: 4000, minibar: 3600, laundry: 1900, other: 7200, total: 282500 }, expenses: { salaries: 64000, utilities: 13200, maintenance: 10000, supplies: 7600, marketing: 6800, commissions: 26400, insurance: 3000, taxes: 16600, depreciation: 8000, other: 5400, total: 161000 }, profit: { grossProfit: 152200, operatingProfit: 121500, netProfit: 89200, grossMargin: 53.9, operatingMargin: 43.0, netMargin: 31.6, ebitda: 129500 }, cashflow: { opening: 868100, inflows: 282500, outflows: 161000, closing: 989600, bankBalance: 989600 } },
+  { date: "2024-10-01", revenue: { rooms: 158400, foodAndBeverage: 34800, spa: 9400, events: 6800, parking: 3400, minibar: 3100, laundry: 1650, other: 5700, total: 223250 }, expenses: { salaries: 60000, utilities: 12800, maintenance: 9200, supplies: 6800, marketing: 6200, commissions: 22000, insurance: 3000, taxes: 14400, depreciation: 8000, other: 5000, total: 147400 }, profit: { grossProfit: 106800, operatingProfit: 75850, netProfit: 55700, grossMargin: 47.8, operatingMargin: 34.0, netMargin: 24.9, ebitda: 83850 }, cashflow: { opening: 989600, inflows: 223250, outflows: 147400, closing: 1065450, bankBalance: 1065450 } },
+  { date: "2024-11-01", revenue: { rooms: 100800, foodAndBeverage: 28800, spa: 6800, events: 4800, parking: 2600, minibar: 2400, laundry: 1200, other: 4400, total: 151800 }, expenses: { salaries: 56500, utilities: 14000, maintenance: 7800, supplies: 5600, marketing: 5800, commissions: 14800, insurance: 3000, taxes: 10400, depreciation: 8000, other: 4300, total: 130200 }, profit: { grossProfit: 52800, operatingProfit: 21600, netProfit: 15800, grossMargin: 34.8, operatingMargin: 14.2, netMargin: 10.4, ebitda: 29600 }, cashflow: { opening: 1065450, inflows: 151800, outflows: 130200, closing: 1087050, bankBalance: 1087050 } },
+  { date: "2024-12-01", revenue: { rooms: 129600, foodAndBeverage: 33200, spa: 8500, events: 11800, parking: 2900, minibar: 2800, laundry: 1400, other: 5900, total: 196100 }, expenses: { salaries: 58500, utilities: 15300, maintenance: 8400, supplies: 6300, marketing: 6600, commissions: 18800, insurance: 3000, taxes: 12600, depreciation: 8000, other: 4800, total: 142300 }, profit: { grossProfit: 86400, operatingProfit: 53800, netProfit: 39400, grossMargin: 44.1, operatingMargin: 27.4, netMargin: 20.1, ebitda: 61800 }, cashflow: { opening: 1087050, inflows: 196100, outflows: 142300, closing: 1140850, bankBalance: 1140850 } },
+  { date: "2025-01-01", revenue: { rooms: 85200, foodAndBeverage: 24400, spa: 5700, events: 3500, parking: 2200, minibar: 2000, laundry: 1000, other: 3900, total: 127900 }, expenses: { salaries: 54500, utilities: 16600, maintenance: 7200, supplies: 5000, marketing: 5200, commissions: 12600, insurance: 3000, taxes: 9000, depreciation: 8000, other: 3900, total: 125000 }, profit: { grossProfit: 33600, operatingProfit: 2900, netProfit: 2100, grossMargin: 26.3, operatingMargin: 2.3, netMargin: 1.6, ebitda: 10900 }, cashflow: { opening: 1140850, inflows: 127900, outflows: 125000, closing: 1143750, bankBalance: 1143750 } },
+  { date: "2025-02-01", revenue: { rooms: 95400, foodAndBeverage: 27200, spa: 6600, events: 4200, parking: 2400, minibar: 2300, laundry: 1100, other: 4400, total: 143600 }, expenses: { salaries: 55500, utilities: 15400, maintenance: 7600, supplies: 5400, marketing: 5600, commissions: 14400, insurance: 3000, taxes: 9800, depreciation: 8000, other: 4100, total: 128800 }, profit: { grossProfit: 46400, operatingProfit: 14800, netProfit: 10800, grossMargin: 32.3, operatingMargin: 10.3, netMargin: 7.5, ebitda: 22800 }, cashflow: { opening: 1143750, inflows: 143600, outflows: 128800, closing: 1158550, bankBalance: 1158550 } },
+];
+
+// N : Mars 2025 — Février 2026
 export const monthlyFinancials: FinancialData[] = [
-  {
-    date: "2025-03-01",
-    revenue: { rooms: 124800, foodAndBeverage: 35200, spa: 8200, events: 5600, parking: 3100, minibar: 2800, laundry: 1400, other: 5600, total: 186700 },
-    expenses: { salaries: 58400, utilities: 14200, maintenance: 8600, supplies: 6200, marketing: 5800, commissions: 18700, insurance: 3200, taxes: 12400, depreciation: 8500, other: 4800, total: 140800 },
-    profit: { grossProfit: 86200, operatingProfit: 45900, netProfit: 33500, grossMargin: 46.2, operatingMargin: 24.6, netMargin: 17.9, ebitda: 54400 },
-    cashflow: { opening: 125000, inflows: 186700, outflows: 140800, closing: 170900, bankBalance: 170900 },
-  },
-  {
-    date: "2025-04-01",
-    revenue: { rooms: 166800, foodAndBeverage: 38400, spa: 9800, events: 7200, parking: 3600, minibar: 3200, laundry: 1600, other: 6400, total: 237000 },
-    expenses: { salaries: 62000, utilities: 13800, maintenance: 9200, supplies: 7000, marketing: 6200, commissions: 22400, insurance: 3200, taxes: 14800, depreciation: 8500, other: 5200, total: 152300 },
-    profit: { grossProfit: 114200, operatingProfit: 84700, netProfit: 62300, grossMargin: 48.2, operatingMargin: 35.7, netMargin: 26.3, ebitda: 93200 },
-    cashflow: { opening: 170900, inflows: 237000, outflows: 152300, closing: 255600, bankBalance: 255600 },
-  },
-  {
-    date: "2025-05-01",
-    revenue: { rooms: 196200, foodAndBeverage: 44800, spa: 12400, events: 8800, parking: 4200, minibar: 3800, laundry: 1900, other: 7200, total: 279300 },
-    expenses: { salaries: 65800, utilities: 13200, maintenance: 10400, supplies: 7800, marketing: 7000, commissions: 26400, insurance: 3200, taxes: 16800, depreciation: 8500, other: 5600, total: 164700 },
-    profit: { grossProfit: 144800, operatingProfit: 114600, netProfit: 84200, grossMargin: 51.8, operatingMargin: 41.0, netMargin: 30.1, ebitda: 123100 },
-    cashflow: { opening: 255600, inflows: 279300, outflows: 164700, closing: 370200, bankBalance: 370200 },
-  },
-  {
-    date: "2025-06-01",
-    revenue: { rooms: 237600, foodAndBeverage: 49800, spa: 15200, events: 10400, parking: 4800, minibar: 4200, laundry: 2200, other: 8400, total: 332600 },
-    expenses: { salaries: 72000, utilities: 14600, maintenance: 11200, supplies: 8600, marketing: 7800, commissions: 31200, insurance: 3200, taxes: 19200, depreciation: 8500, other: 6200, total: 182500 },
-    profit: { grossProfit: 182400, operatingProfit: 150100, netProfit: 110200, grossMargin: 54.8, operatingMargin: 45.1, netMargin: 33.1, ebitda: 158600 },
-    cashflow: { opening: 370200, inflows: 332600, outflows: 182500, closing: 520300, bankBalance: 520300 },
-  },
-  {
-    date: "2025-07-01",
-    revenue: { rooms: 302400, foodAndBeverage: 62100, spa: 18600, events: 12800, parking: 5400, minibar: 5200, laundry: 2800, other: 10200, total: 419500 },
-    expenses: { salaries: 78400, utilities: 16800, maintenance: 12000, supplies: 9400, marketing: 8200, commissions: 38400, insurance: 3200, taxes: 22800, depreciation: 8500, other: 7000, total: 204700 },
-    profit: { grossProfit: 248200, operatingProfit: 214800, netProfit: 157600, grossMargin: 59.2, operatingMargin: 51.2, netMargin: 37.6, ebitda: 223300 },
-    cashflow: { opening: 520300, inflows: 419500, outflows: 204700, closing: 735100, bankBalance: 735100 },
-  },
-  {
-    date: "2025-08-01",
-    revenue: { rooms: 326400, foodAndBeverage: 65800, spa: 19800, events: 13600, parking: 5800, minibar: 5600, laundry: 3000, other: 10800, total: 450800 },
-    expenses: { salaries: 82000, utilities: 18200, maintenance: 12800, supplies: 10000, marketing: 8600, commissions: 42000, insurance: 3200, taxes: 24400, depreciation: 8500, other: 7400, total: 217100 },
-    profit: { grossProfit: 268400, operatingProfit: 233700, netProfit: 171400, grossMargin: 59.5, operatingMargin: 51.8, netMargin: 38.0, ebitda: 242200 },
-    cashflow: { opening: 735100, inflows: 450800, outflows: 217100, closing: 968800, bankBalance: 968800 },
-  },
-  {
-    date: "2025-09-01",
-    revenue: { rooms: 218400, foodAndBeverage: 46200, spa: 13800, events: 9600, parking: 4400, minibar: 3900, laundry: 2100, other: 7800, total: 306200 },
-    expenses: { salaries: 68000, utilities: 14000, maintenance: 10800, supplies: 8200, marketing: 7400, commissions: 28800, insurance: 3200, taxes: 18000, depreciation: 8500, other: 5800, total: 172700 },
-    profit: { grossProfit: 166400, operatingProfit: 133500, netProfit: 98000, grossMargin: 54.3, operatingMargin: 43.6, netMargin: 32.0, ebitda: 142000 },
-    cashflow: { opening: 968800, inflows: 306200, outflows: 172700, closing: 1102300, bankBalance: 1102300 },
-  },
-  {
-    date: "2025-10-01",
-    revenue: { rooms: 172800, foodAndBeverage: 37800, spa: 10200, events: 7400, parking: 3700, minibar: 3400, laundry: 1800, other: 6200, total: 243300 },
-    expenses: { salaries: 64000, utilities: 13600, maintenance: 9800, supplies: 7400, marketing: 6800, commissions: 24000, insurance: 3200, taxes: 15600, depreciation: 8500, other: 5400, total: 158300 },
-    profit: { grossProfit: 118600, operatingProfit: 85000, netProfit: 62400, grossMargin: 48.7, operatingMargin: 34.9, netMargin: 25.6, ebitda: 93500 },
-    cashflow: { opening: 1102300, inflows: 243300, outflows: 158300, closing: 1187300, bankBalance: 1187300 },
-  },
-  {
-    date: "2025-11-01",
-    revenue: { rooms: 109200, foodAndBeverage: 31200, spa: 7400, events: 5200, parking: 2800, minibar: 2600, laundry: 1300, other: 4800, total: 164500 },
-    expenses: { salaries: 60000, utilities: 14800, maintenance: 8400, supplies: 6000, marketing: 6400, commissions: 16200, insurance: 3200, taxes: 11200, depreciation: 8500, other: 4600, total: 139300 },
-    profit: { grossProfit: 58800, operatingProfit: 25200, netProfit: 18500, grossMargin: 35.7, operatingMargin: 15.3, netMargin: 11.2, ebitda: 33700 },
-    cashflow: { opening: 1187300, inflows: 164500, outflows: 139300, closing: 1212500, bankBalance: 1212500 },
-  },
-  {
-    date: "2025-12-01",
-    revenue: { rooms: 140400, foodAndBeverage: 36000, spa: 9200, events: 12800, parking: 3200, minibar: 3000, laundry: 1500, other: 6400, total: 212500 },
-    expenses: { salaries: 62000, utilities: 16200, maintenance: 9000, supplies: 6800, marketing: 7200, commissions: 20400, insurance: 3200, taxes: 13600, depreciation: 8500, other: 5200, total: 152100 },
-    profit: { grossProfit: 94400, operatingProfit: 60400, netProfit: 44300, grossMargin: 44.4, operatingMargin: 28.4, netMargin: 20.8, ebitda: 68900 },
-    cashflow: { opening: 1212500, inflows: 212500, outflows: 152100, closing: 1272900, bankBalance: 1272900 },
-  },
-  {
-    date: "2026-01-01",
-    revenue: { rooms: 92400, foodAndBeverage: 26400, spa: 6200, events: 3800, parking: 2400, minibar: 2200, laundry: 1100, other: 4200, total: 138700 },
-    expenses: { salaries: 58000, utilities: 17600, maintenance: 7800, supplies: 5400, marketing: 5600, commissions: 13800, insurance: 3200, taxes: 9800, depreciation: 8500, other: 4200, total: 133900 },
-    profit: { grossProfit: 38000, operatingProfit: 4800, netProfit: 3500, grossMargin: 27.4, operatingMargin: 3.5, netMargin: 2.5, ebitda: 13300 },
-    cashflow: { opening: 1272900, inflows: 138700, outflows: 133900, closing: 1277700, bankBalance: 1277700 },
-  },
-  {
-    date: "2026-02-01",
-    revenue: { rooms: 103200, foodAndBeverage: 29400, spa: 7200, events: 4600, parking: 2600, minibar: 2500, laundry: 1200, other: 4800, total: 155500 },
-    expenses: { salaries: 59000, utilities: 16400, maintenance: 8200, supplies: 5800, marketing: 6000, commissions: 15600, insurance: 3200, taxes: 10600, depreciation: 8500, other: 4400, total: 137700 },
-    profit: { grossProfit: 51200, operatingProfit: 17800, netProfit: 13100, grossMargin: 32.9, operatingMargin: 11.4, netMargin: 8.4, ebitda: 26300 },
-    cashflow: { opening: 1277700, inflows: 155500, outflows: 137700, closing: 1295500, bankBalance: 1295500 },
-  },
+  { date: "2025-03-01", revenue: { rooms: 124800, foodAndBeverage: 35200, spa: 8200, events: 5600, parking: 3100, minibar: 2800, laundry: 1400, other: 5600, total: 186700 }, expenses: { salaries: 58400, utilities: 14200, maintenance: 8600, supplies: 6200, marketing: 5800, commissions: 18700, insurance: 3200, taxes: 12400, depreciation: 8500, other: 4800, total: 140800 }, profit: { grossProfit: 86200, operatingProfit: 45900, netProfit: 33500, grossMargin: 46.2, operatingMargin: 24.6, netMargin: 17.9, ebitda: 54400 }, cashflow: { opening: 125000, inflows: 186700, outflows: 140800, closing: 170900, bankBalance: 170900 } },
+  { date: "2025-04-01", revenue: { rooms: 166800, foodAndBeverage: 38400, spa: 9800, events: 7200, parking: 3600, minibar: 3200, laundry: 1600, other: 6400, total: 237000 }, expenses: { salaries: 62000, utilities: 13800, maintenance: 9200, supplies: 7000, marketing: 6200, commissions: 22400, insurance: 3200, taxes: 14800, depreciation: 8500, other: 5200, total: 152300 }, profit: { grossProfit: 114200, operatingProfit: 84700, netProfit: 62300, grossMargin: 48.2, operatingMargin: 35.7, netMargin: 26.3, ebitda: 93200 }, cashflow: { opening: 170900, inflows: 237000, outflows: 152300, closing: 255600, bankBalance: 255600 } },
+  { date: "2025-05-01", revenue: { rooms: 196200, foodAndBeverage: 44800, spa: 12400, events: 8800, parking: 4200, minibar: 3800, laundry: 1900, other: 7200, total: 279300 }, expenses: { salaries: 65800, utilities: 13200, maintenance: 10400, supplies: 7800, marketing: 7000, commissions: 26400, insurance: 3200, taxes: 16800, depreciation: 8500, other: 5600, total: 164700 }, profit: { grossProfit: 144800, operatingProfit: 114600, netProfit: 84200, grossMargin: 51.8, operatingMargin: 41.0, netMargin: 30.1, ebitda: 123100 }, cashflow: { opening: 255600, inflows: 279300, outflows: 164700, closing: 370200, bankBalance: 370200 } },
+  { date: "2025-06-01", revenue: { rooms: 237600, foodAndBeverage: 49800, spa: 15200, events: 10400, parking: 4800, minibar: 4200, laundry: 2200, other: 8400, total: 332600 }, expenses: { salaries: 72000, utilities: 14600, maintenance: 11200, supplies: 8600, marketing: 7800, commissions: 31200, insurance: 3200, taxes: 19200, depreciation: 8500, other: 6200, total: 182500 }, profit: { grossProfit: 182400, operatingProfit: 150100, netProfit: 110200, grossMargin: 54.8, operatingMargin: 45.1, netMargin: 33.1, ebitda: 158600 }, cashflow: { opening: 370200, inflows: 332600, outflows: 182500, closing: 520300, bankBalance: 520300 } },
+  { date: "2025-07-01", revenue: { rooms: 302400, foodAndBeverage: 62100, spa: 18600, events: 12800, parking: 5400, minibar: 5200, laundry: 2800, other: 10200, total: 419500 }, expenses: { salaries: 78400, utilities: 16800, maintenance: 12000, supplies: 9400, marketing: 8200, commissions: 38400, insurance: 3200, taxes: 22800, depreciation: 8500, other: 7000, total: 204700 }, profit: { grossProfit: 248200, operatingProfit: 214800, netProfit: 157600, grossMargin: 59.2, operatingMargin: 51.2, netMargin: 37.6, ebitda: 223300 }, cashflow: { opening: 520300, inflows: 419500, outflows: 204700, closing: 735100, bankBalance: 735100 } },
+  { date: "2025-08-01", revenue: { rooms: 326400, foodAndBeverage: 65800, spa: 19800, events: 13600, parking: 5800, minibar: 5600, laundry: 3000, other: 10800, total: 450800 }, expenses: { salaries: 82000, utilities: 18200, maintenance: 12800, supplies: 10000, marketing: 8600, commissions: 42000, insurance: 3200, taxes: 24400, depreciation: 8500, other: 7400, total: 217100 }, profit: { grossProfit: 268400, operatingProfit: 233700, netProfit: 171400, grossMargin: 59.5, operatingMargin: 51.8, netMargin: 38.0, ebitda: 242200 }, cashflow: { opening: 735100, inflows: 450800, outflows: 217100, closing: 968800, bankBalance: 968800 } },
+  { date: "2025-09-01", revenue: { rooms: 218400, foodAndBeverage: 46200, spa: 13800, events: 9600, parking: 4400, minibar: 3900, laundry: 2100, other: 7800, total: 306200 }, expenses: { salaries: 68000, utilities: 14000, maintenance: 10800, supplies: 8200, marketing: 7400, commissions: 28800, insurance: 3200, taxes: 18000, depreciation: 8500, other: 5800, total: 172700 }, profit: { grossProfit: 166400, operatingProfit: 133500, netProfit: 98000, grossMargin: 54.3, operatingMargin: 43.6, netMargin: 32.0, ebitda: 142000 }, cashflow: { opening: 968800, inflows: 306200, outflows: 172700, closing: 1102300, bankBalance: 1102300 } },
+  { date: "2025-10-01", revenue: { rooms: 172800, foodAndBeverage: 37800, spa: 10200, events: 7400, parking: 3700, minibar: 3400, laundry: 1800, other: 6200, total: 243300 }, expenses: { salaries: 64000, utilities: 13600, maintenance: 9800, supplies: 7400, marketing: 6800, commissions: 24000, insurance: 3200, taxes: 15600, depreciation: 8500, other: 5400, total: 158300 }, profit: { grossProfit: 118600, operatingProfit: 85000, netProfit: 62400, grossMargin: 48.7, operatingMargin: 34.9, netMargin: 25.6, ebitda: 93500 }, cashflow: { opening: 1102300, inflows: 243300, outflows: 158300, closing: 1187300, bankBalance: 1187300 } },
+  { date: "2025-11-01", revenue: { rooms: 109200, foodAndBeverage: 31200, spa: 7400, events: 5200, parking: 2800, minibar: 2600, laundry: 1300, other: 4800, total: 164500 }, expenses: { salaries: 60000, utilities: 14800, maintenance: 8400, supplies: 6000, marketing: 6400, commissions: 16200, insurance: 3200, taxes: 11200, depreciation: 8500, other: 4600, total: 139300 }, profit: { grossProfit: 58800, operatingProfit: 25200, netProfit: 18500, grossMargin: 35.7, operatingMargin: 15.3, netMargin: 11.2, ebitda: 33700 }, cashflow: { opening: 1187300, inflows: 164500, outflows: 139300, closing: 1212500, bankBalance: 1212500 } },
+  { date: "2025-12-01", revenue: { rooms: 140400, foodAndBeverage: 36000, spa: 9200, events: 12800, parking: 3200, minibar: 3000, laundry: 1500, other: 6400, total: 212500 }, expenses: { salaries: 62000, utilities: 16200, maintenance: 9000, supplies: 6800, marketing: 7200, commissions: 20400, insurance: 3200, taxes: 13600, depreciation: 8500, other: 5200, total: 152100 }, profit: { grossProfit: 94400, operatingProfit: 60400, netProfit: 44300, grossMargin: 44.4, operatingMargin: 28.4, netMargin: 20.8, ebitda: 68900 }, cashflow: { opening: 1212500, inflows: 212500, outflows: 152100, closing: 1272900, bankBalance: 1272900 } },
+  { date: "2026-01-01", revenue: { rooms: 92400, foodAndBeverage: 26400, spa: 6200, events: 3800, parking: 2400, minibar: 2200, laundry: 1100, other: 4200, total: 138700 }, expenses: { salaries: 58000, utilities: 17600, maintenance: 7800, supplies: 5400, marketing: 5600, commissions: 13800, insurance: 3200, taxes: 9800, depreciation: 8500, other: 4200, total: 133900 }, profit: { grossProfit: 38000, operatingProfit: 4800, netProfit: 3500, grossMargin: 27.4, operatingMargin: 3.5, netMargin: 2.5, ebitda: 13300 }, cashflow: { opening: 1272900, inflows: 138700, outflows: 133900, closing: 1277700, bankBalance: 1277700 } },
+  { date: "2026-02-01", revenue: { rooms: 103200, foodAndBeverage: 29400, spa: 7200, events: 4600, parking: 2600, minibar: 2500, laundry: 1200, other: 4800, total: 155500 }, expenses: { salaries: 59000, utilities: 16400, maintenance: 8200, supplies: 5800, marketing: 6000, commissions: 15600, insurance: 3200, taxes: 10600, depreciation: 8500, other: 4400, total: 137700 }, profit: { grossProfit: 51200, operatingProfit: 17800, netProfit: 13100, grossMargin: 32.9, operatingMargin: 11.4, netMargin: 8.4, ebitda: 26300 }, cashflow: { opening: 1277700, inflows: 155500, outflows: 137700, closing: 1295500, bankBalance: 1295500 } },
 ];
 
 export const currentMonthFinancial = monthlyFinancials[monthlyFinancials.length - 1];
