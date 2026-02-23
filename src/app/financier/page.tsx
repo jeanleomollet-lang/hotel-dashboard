@@ -110,6 +110,10 @@ export default function FinancierPage() {
     }
   };
 
+  // Années et mois disponibles pour les sélecteurs séparés
+  const availableYears = Array.from(new Set(available.map((a) => a.year))).sort();
+  const monthsForSelectedYear = available.filter((a) => a.year === selectedYear).map((a) => a.month);
+
   if (!current) return <div className="p-8 text-gray-500">Aucune donnée pour ce mois.</div>;
 
   const monthLabel = `${MONTH_NAMES[selectedMonth]} ${selectedYear}`;
@@ -217,17 +221,34 @@ export default function FinancierPage() {
         </div>
         <div className="flex items-center gap-2">
           <select
-            value={`${selectedYear}-${selectedMonth}`}
+            value={selectedMonth}
             onChange={(e) => {
-              const [y, m] = e.target.value.split("-").map(Number);
+              const m = Number(e.target.value);
               setSelectedMonth(m);
-              setSelectedYear(y);
             }}
             className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer"
           >
-            {available.map((a) => (
-              <option key={`${a.year}-${a.month}`} value={`${a.year}-${a.month}`}>
-                {a.label}
+            {monthsForSelectedYear.map((m) => (
+              <option key={m} value={m}>
+                {MONTH_NAMES[m]}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedYear}
+            onChange={(e) => {
+              const y = Number(e.target.value);
+              setSelectedYear(y);
+              const monthsForYear = available.filter((a) => a.year === y).map((a) => a.month);
+              if (!monthsForYear.includes(selectedMonth)) {
+                setSelectedMonth(monthsForYear[monthsForYear.length - 1]);
+              }
+            }}
+            className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer"
+          >
+            {availableYears.map((y) => (
+              <option key={y} value={y}>
+                {y}
               </option>
             ))}
           </select>
@@ -457,26 +478,27 @@ export default function FinancierPage() {
                   formatter={(value: number) => [`${value.toFixed(1)}%`, undefined]}
                   contentStyle={{ backgroundColor: "#fff", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "12px" }}
                 />
-                <Legend iconType="circle" iconSize={8} />
+                <Legend
+                  content={() => (
+                    <div className="flex items-center justify-center gap-6 mt-2">
+                      {[
+                        { label: "Marge brute", color: "#22c55e" },
+                        { label: "Marge opérationnelle", color: "#f59e0b" },
+                        { label: "Marge nette", color: "#4c6ef5" },
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center gap-1.5 text-xs text-gray-600">
+                          <TooltipBadge label={item.label} color={item.color} />
+                          <span>{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                />
                 <Line type="monotone" dataKey="Marge brute" stroke="#22c55e" strokeWidth={2} dot={{ r: 2 }} />
                 <Line type="monotone" dataKey="Marge opérationnelle" stroke="#f59e0b" strokeWidth={2} dot={{ r: 2 }} />
                 <Line type="monotone" dataKey="Marge nette" stroke="#4c6ef5" strokeWidth={2} dot={{ r: 2 }} />
               </LineChart>
             </ResponsiveContainer>
-            {/* Légende avec tooltips */}
-            <div className="flex items-center justify-center gap-6 mt-3 pt-3 border-t border-gray-100">
-              {[
-                { label: "Marge brute", color: "#22c55e", value: current.profit.grossMargin },
-                { label: "Marge opérationnelle", color: "#f59e0b", value: current.profit.operatingMargin },
-                { label: "Marge nette", color: "#4c6ef5", value: current.profit.netMargin },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-1.5 text-xs text-gray-600">
-                  <TooltipBadge label={item.label} color={item.color} />
-                  <span>{item.label}</span>
-                  <span className="font-semibold text-gray-800">{item.value.toFixed(1)}%</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -561,7 +583,15 @@ export default function FinancierPage() {
           </h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table w-full" style={{ tableLayout: "fixed" }}>
+            <colgroup>
+              <col style={{ width: "26%" }} />
+              <col style={{ width: "15%" }} />
+              <col style={{ width: "10%" }} />
+              <col style={{ width: "17%" }} />
+              <col style={{ width: "16%" }} />
+              <col style={{ width: "16%" }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>Poste</th>

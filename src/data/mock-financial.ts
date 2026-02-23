@@ -266,15 +266,10 @@ function sumFinancials(items: FinancialData[]): FinancialData {
   return { date: lastItem.date, revenue, expenses, profit, cashflow };
 }
 
-// Mois/années disponibles pour le sélecteur (uniquement les mois courants : mars 2025 - fév 2026)
+// Mois/années disponibles pour le sélecteur (toutes les données disponibles)
 export function getAvailableMonths(): { month: number; year: number; label: string }[] {
   const seen = new Set<string>();
   return monthlyFinancials
-    .filter((m) => {
-      const d = new Date(m.date);
-      // Uniquement à partir de mars 2025
-      return d >= new Date("2025-03-01");
-    })
     .map((m) => {
       const d = new Date(m.date);
       const month = d.getMonth() + 1;
