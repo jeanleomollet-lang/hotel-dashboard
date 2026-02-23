@@ -30,7 +30,6 @@ import {
   CalendarDays,
   ChevronLeft,
   ChevronRight,
-  Info,
 } from "lucide-react";
 import PageHeader from "@/components/ui/PageHeader";
 import StatCard from "@/components/ui/StatCard";
@@ -585,32 +584,32 @@ export default function FinancierPage() {
         <div className="overflow-x-auto">
           <table className="table w-full" style={{ tableLayout: "fixed" }}>
             <colgroup>
-              <col style={{ width: "26%" }} />
-              <col style={{ width: "15%" }} />
+              <col style={{ width: "22%" }} />
+              <col style={{ width: "16%" }} />
               <col style={{ width: "10%" }} />
+              <col style={{ width: "18%" }} />
               <col style={{ width: "17%" }} />
-              <col style={{ width: "16%" }} />
-              <col style={{ width: "16%" }} />
+              <col style={{ width: "17%" }} />
             </colgroup>
             <thead>
               <tr>
-                <th>Poste</th>
-                <th className="text-right capitalize">{MONTH_NAMES[selectedMonth]} {selectedYear}</th>
-                <th className="text-right">% du CA</th>
-                <th className="text-right">{fiscalYearLabel}</th>
-                <th className="text-right capitalize">{MONTH_NAMES[selectedMonth]} {selectedYear - 1}</th>
-                <th className="text-right">{fiscalYearN1Label}</th>
+                <th className="text-left">Poste</th>
+                <th className="text-right pr-4 capitalize">{MONTH_NAMES[selectedMonth]} {selectedYear}</th>
+                <th className="text-right pr-4">% du CA</th>
+                <th className="text-right pr-4">{fiscalYearLabel}</th>
+                <th className="text-right pr-4 capitalize">{MONTH_NAMES[selectedMonth]} {selectedYear - 1}</th>
+                <th className="text-right pr-4">{fiscalYearN1Label}</th>
               </tr>
             </thead>
             <tbody>
               {/* === CHIFFRE D'AFFAIRES === */}
               <tr className="bg-emerald-50/50">
                 <td className="font-semibold text-emerald-700">CHIFFRE D&apos;AFFAIRES</td>
-                <td className="text-right font-bold text-emerald-700">{formatCurrency(current.revenue.total)}</td>
-                <td className="text-right text-emerald-600">100%</td>
-                <td className="text-right font-semibold text-emerald-700">{cumul ? formatCurrency(cumul.revenue.total) : "—"}</td>
-                <td className="text-right text-gray-600">{n1 ? formatCurrency(n1.revenue.total) : "—"}</td>
-                <td className="text-right text-gray-600">{cumulN1 ? formatCurrency(cumulN1.revenue.total) : "—"}</td>
+                <td className="text-right pr-4 font-bold text-emerald-700">{formatCurrency(current.revenue.total)}</td>
+                <td className="text-right pr-4 text-emerald-600">100%</td>
+                <td className="text-right pr-4 font-semibold text-emerald-700">{cumul ? formatCurrency(cumul.revenue.total) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{n1 ? formatCurrency(n1.revenue.total) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{cumulN1 ? formatCurrency(cumulN1.revenue.total) : "—"}</td>
               </tr>
               {revenueRows.map((row) => {
                 const val = current.revenue[row.key];
@@ -621,32 +620,32 @@ export default function FinancierPage() {
                 return (
                   <tr key={row.label}>
                     <td className="pl-8 text-gray-600">{row.label}</td>
-                    <td className="text-right">{formatCurrency(val)}</td>
-                    <td className="text-right text-gray-400">{pct}%</td>
-                    <td className="text-right text-gray-500">{cumulVal !== null ? formatCurrency(cumulVal) : "—"}</td>
-                    <td className="text-right text-gray-400">{n1Val !== null ? formatCurrency(n1Val) : "—"}</td>
-                    <td className="text-right text-gray-400">{cumulN1Val !== null ? formatCurrency(cumulN1Val) : "—"}</td>
+                    <td className="text-right pr-4">{formatCurrency(val)}</td>
+                    <td className="text-right pr-4 text-gray-400">{pct}%</td>
+                    <td className="text-right pr-4 text-gray-500">{cumulVal !== null ? formatCurrency(cumulVal) : "—"}</td>
+                    <td className="text-right pr-4 text-gray-400">{n1Val !== null ? formatCurrency(n1Val) : "—"}</td>
+                    <td className="text-right pr-4 text-gray-400">{cumulN1Val !== null ? formatCurrency(cumulN1Val) : "—"}</td>
                   </tr>
                 );
               })}
               {/* Autres revenus */}
               <tr>
                 <td className="pl-8 text-gray-600">Autres revenus</td>
-                <td className="text-right">{formatCurrency(getOtherRevenue(current))}</td>
-                <td className="text-right text-gray-400">{current.revenue.total > 0 ? ((getOtherRevenue(current) / current.revenue.total) * 100).toFixed(1) : "0.0"}%</td>
-                <td className="text-right text-gray-500">{cumul ? formatCurrency(getOtherRevenue(cumul)) : "—"}</td>
-                <td className="text-right text-gray-400">{n1 ? formatCurrency(getOtherRevenue(n1)) : "—"}</td>
-                <td className="text-right text-gray-400">{cumulN1 ? formatCurrency(getOtherRevenue(cumulN1)) : "—"}</td>
+                <td className="text-right pr-4">{formatCurrency(getOtherRevenue(current))}</td>
+                <td className="text-right pr-4 text-gray-400">{current.revenue.total > 0 ? ((getOtherRevenue(current) / current.revenue.total) * 100).toFixed(1) : "0.0"}%</td>
+                <td className="text-right pr-4 text-gray-500">{cumul ? formatCurrency(getOtherRevenue(cumul)) : "—"}</td>
+                <td className="text-right pr-4 text-gray-400">{n1 ? formatCurrency(getOtherRevenue(n1)) : "—"}</td>
+                <td className="text-right pr-4 text-gray-400">{cumulN1 ? formatCurrency(getOtherRevenue(cumulN1)) : "—"}</td>
               </tr>
 
               {/* === CHARGES TOTALES === */}
               <tr className="bg-red-50/50">
                 <td className="font-semibold text-red-700">CHARGES TOTALES</td>
-                <td className="text-right font-bold text-red-700">{formatCurrency(current.expenses.total)}</td>
-                <td className="text-right text-red-600">{((current.expenses.total / current.revenue.total) * 100).toFixed(1)}%</td>
-                <td className="text-right font-semibold text-red-700">{cumul ? formatCurrency(cumul.expenses.total) : "—"}</td>
-                <td className="text-right text-gray-600">{n1 ? formatCurrency(n1.expenses.total) : "—"}</td>
-                <td className="text-right text-gray-600">{cumulN1 ? formatCurrency(cumulN1.expenses.total) : "—"}</td>
+                <td className="text-right pr-4 font-bold text-red-700">{formatCurrency(current.expenses.total)}</td>
+                <td className="text-right pr-4 text-red-600">{((current.expenses.total / current.revenue.total) * 100).toFixed(1)}%</td>
+                <td className="text-right pr-4 font-semibold text-red-700">{cumul ? formatCurrency(cumul.expenses.total) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{n1 ? formatCurrency(n1.expenses.total) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{cumulN1 ? formatCurrency(cumulN1.expenses.total) : "—"}</td>
               </tr>
               {expenseRows.map((row) => {
                 const val = current.expenses[row.key];
@@ -657,56 +656,37 @@ export default function FinancierPage() {
                 return (
                   <tr key={row.label}>
                     <td className="pl-8 text-gray-600">{row.label}</td>
-                    <td className="text-right">{formatCurrency(val)}</td>
-                    <td className="text-right text-gray-400">{pct}%</td>
-                    <td className="text-right text-gray-500">{cumulVal !== null ? formatCurrency(cumulVal) : "—"}</td>
-                    <td className="text-right text-gray-400">{n1Val !== null ? formatCurrency(n1Val) : "—"}</td>
-                    <td className="text-right text-gray-400">{cumulN1Val !== null ? formatCurrency(cumulN1Val) : "—"}</td>
+                    <td className="text-right pr-4">{formatCurrency(val)}</td>
+                    <td className="text-right pr-4 text-gray-400">{pct}%</td>
+                    <td className="text-right pr-4 text-gray-500">{cumulVal !== null ? formatCurrency(cumulVal) : "—"}</td>
+                    <td className="text-right pr-4 text-gray-400">{n1Val !== null ? formatCurrency(n1Val) : "—"}</td>
+                    <td className="text-right pr-4 text-gray-400">{cumulN1Val !== null ? formatCurrency(cumulN1Val) : "—"}</td>
                   </tr>
                 );
               })}
               {/* Autres charges */}
               <tr>
                 <td className="pl-8 text-gray-600">Autres charges</td>
-                <td className="text-right">{formatCurrency(getOtherExpenses(current))}</td>
-                <td className="text-right text-gray-400">{current.revenue.total > 0 ? ((getOtherExpenses(current) / current.revenue.total) * 100).toFixed(1) : "0.0"}%</td>
-                <td className="text-right text-gray-500">{cumul ? formatCurrency(getOtherExpenses(cumul)) : "—"}</td>
-                <td className="text-right text-gray-400">{n1 ? formatCurrency(getOtherExpenses(n1)) : "—"}</td>
-                <td className="text-right text-gray-400">{cumulN1 ? formatCurrency(getOtherExpenses(cumulN1)) : "—"}</td>
+                <td className="text-right pr-4">{formatCurrency(getOtherExpenses(current))}</td>
+                <td className="text-right pr-4 text-gray-400">{current.revenue.total > 0 ? ((getOtherExpenses(current) / current.revenue.total) * 100).toFixed(1) : "0.0"}%</td>
+                <td className="text-right pr-4 text-gray-500">{cumul ? formatCurrency(getOtherExpenses(cumul)) : "—"}</td>
+                <td className="text-right pr-4 text-gray-400">{n1 ? formatCurrency(getOtherExpenses(n1)) : "—"}</td>
+                <td className="text-right pr-4 text-gray-400">{cumulN1 ? formatCurrency(getOtherExpenses(cumulN1)) : "—"}</td>
               </tr>
 
               {/* === RÉSULTAT NET === */}
               <tr className="bg-blue-50/50 font-bold">
                 <td className="text-blue-800">RÉSULTAT NET</td>
-                <td className="text-right text-blue-800">{formatCurrency(current.profit.netProfit)}</td>
-                <td className="text-right text-blue-600">{current.profit.netMargin.toFixed(1)}%</td>
-                <td className="text-right text-blue-800">{cumul ? formatCurrency(cumul.profit.netProfit) : "—"}</td>
-                <td className="text-right text-gray-600">{n1 ? formatCurrency(n1.profit.netProfit) : "—"}</td>
-                <td className="text-right text-gray-600">{cumulN1 ? formatCurrency(cumulN1.profit.netProfit) : "—"}</td>
+                <td className="text-right pr-4 text-blue-800">{formatCurrency(current.profit.netProfit)}</td>
+                <td className="text-right pr-4 text-blue-600">{current.profit.netMargin.toFixed(1)}%</td>
+                <td className="text-right pr-4 text-blue-800">{cumul ? formatCurrency(cumul.profit.netProfit) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{n1 ? formatCurrency(n1.profit.netProfit) : "—"}</td>
+                <td className="text-right pr-4 text-gray-600">{cumulN1 ? formatCurrency(cumulN1.profit.netProfit) : "—"}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        {/* Indicateurs clés sous le tableau avec tooltips */}
-        <div className="px-5 py-4 border-t border-gray-100 flex flex-wrap items-center gap-x-8 gap-y-3">
-          {[
-            { label: "Marge brute", value: current.profit.grossMargin, color: "#22c55e" },
-            { label: "Marge opérationnelle", value: current.profit.operatingMargin, color: "#f59e0b" },
-            { label: "Marge nette", value: current.profit.netMargin, color: "#4c6ef5" },
-            { label: "EBITDA", value: current.profit.ebitda, color: "#8b5cf6", isCurrency: true },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-1.5 text-xs">
-              <TooltipBadge label={item.label} color={item.color} />
-              <span className="text-gray-500">{item.label}</span>
-              <span className="font-bold text-gray-800">
-                {"isCurrency" in item && item.isCurrency
-                  ? formatCurrency(item.value)
-                  : `${item.value.toFixed(1)}%`}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
