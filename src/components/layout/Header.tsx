@@ -2,9 +2,12 @@
 
 import { Bell, Search, Calendar, RefreshCw } from "lucide-react";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Header() {
   const [dateRange, setDateRange] = useState("month");
+  const { data: session } = useSession();
 
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-20">
@@ -58,13 +61,28 @@ export default function Header() {
 
         {/* Profile */}
         <div className="flex items-center gap-2 pl-3 border-l border-gray-200">
-          <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center">
-            <span className="text-xs font-bold text-brand-700">JL</span>
-          </div>
-          <div className="hidden md:block">
-            <p className="text-xs font-semibold text-gray-800">Jean-Louis</p>
-            <p className="text-[10px] text-gray-400">Directeur</p>
-          </div>
+          {session?.user ? (
+            <>
+              <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center">
+                <span className="text-xs font-bold text-brand-700">
+                  {session.user.name?.split(" ").map(n => n[0]).join("") || "U"}
+                </span>
+              </div>
+              <div className="hidden md:block">
+                <p className="text-xs font-semibold text-gray-800">{session.user.name}</p>
+                <p className="text-[10px] text-gray-400">
+                  {(session.user as any).memberships?.[0]?.role || "Utilisateur"}
+                </p>
+              </div>
+            </>
+          ) : (
+            <Link href="/auth/login" className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700 font-medium">
+              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <span className="text-xs font-bold text-gray-400">?</span>
+              </div>
+              <span className="hidden md:block text-xs">Se connecter</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>

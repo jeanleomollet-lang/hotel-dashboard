@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/layout/Sidebar";
-import Header from "@/components/layout/Header";
+import SessionProvider from "@/providers/SessionProvider";
 
 export const metadata: Metadata = {
   title: "HotelPilot - Dashboard Hôtelier Intelligent",
-  description: "Dashboard de gestion hôtelière avec analyse IA intégrée pour hôteliers indépendants",
+  description:
+    "Dashboard de gestion hôtelière avec analyse IA intégrée pour hôteliers indépendants",
+  keywords: ["hotel", "dashboard", "gestion hôtelière", "revenue management", "PMS"],
+  openGraph: {
+    title: "HotelPilot - Dashboard Hôtelier Intelligent",
+    description: "Optimisez la gestion de votre hôtel avec l'IA",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -16,15 +22,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <div className="flex-1 ml-[260px]">
-            <Header />
-            <main className="p-6">
-              {children}
-            </main>
-          </div>
-        </div>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

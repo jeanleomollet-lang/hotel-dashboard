@@ -15,8 +15,11 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  Shield,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -33,6 +36,9 @@ const navigation = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const { data: session } = useSession();
+
+  const isAdmin = (session?.user as any)?.role === "SUPER_ADMIN" || (session?.user as any)?.role === "ADMIN";
 
   return (
     <aside
@@ -87,17 +93,51 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Hotel Info */}
+      {/* Admin link */}
+      {isAdmin && (
+        <div className="px-3 pb-2">
+          <Link
+            href="/admin"
+            className={cn(
+              pathname === "/admin" ? "nav-item-active" : "nav-item-inactive",
+              collapsed && "justify-center px-0"
+            )}
+            title={collapsed ? "Administration" : undefined}
+          >
+            <Shield className={cn("w-5 h-5 shrink-0", pathname === "/admin" ? "text-brand-600" : "text-gray-400")} />
+            {!collapsed && <span className="truncate">Administration</span>}
+          </Link>
+        </div>
+      )}
+
+      {/* Hotel Info & User */}
       {!collapsed && (
         <div className="px-4 py-3 border-t border-gray-100 animate-fade-in">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-hotel-gold/20 flex items-center justify-center">
-              <span className="text-xs font-bold text-hotel-gold">CV</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-hotel-gold/20 flex items-center justify-center shrink-0">
+                <span className="text-xs font-bold text-hotel-gold">
+                  {session?.user?.name?.split(" ").map(n => n[0]).join("") || "CV"}
+                </span>
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-xs font-semibold text-gray-800 truncate">
+                  {session?.user?.name || "Le Clos des Vignes"}
+                </p>
+                <p className="text-[10px] text-gray-400">
+                  {session ? "Connecté" : "Mode démo"}
+                </p>
+              </div>
             </div>
-            <div className="overflow-hidden">
-              <p className="text-xs font-semibold text-gray-800 truncate">Le Clos des Vignes</p>
-              <p className="text-[10px] text-gray-400">★★★★ · 42 chambres</p>
-            </div>
+            {session && (
+              <button
+                onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
+                title="Se déconnecter"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       )}

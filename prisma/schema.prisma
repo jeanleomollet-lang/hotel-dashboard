@@ -1,0 +1,535 @@
+// ============================================================
+// HotelPilot SaaS - Database Schema
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Authentication & Users
+// ============================================================
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  passwordHash   String
+  firstName      String
+  lastName       String
+  avatar         String?
+  emailVerified  DateTime?
+  role           GlobalRole @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  memberships    HotelMember[]
+  sessions       Session[]
+  accounts       Account[]
+  manualEntries  ManualEntry[]
+  auditLogs      AuditLog[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+enum GlobalRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+// ============================================================
+// Multi-Tenancy: Hotels
+// ============================================================
+
+model Hotel {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  address     String?
+  city        String?
+  country     String   @default("France")
+  stars       Int      @default(3)
+  totalRooms  Int      @default(0)
+  currency    String   @default("EUR")
+  timezone    String   @default("Europe/Paris")
+  logoUrl     String?
+  phone       String?
+  email       String?
+  website     String?
+  active      Boolean  @default(true)
+  onboarded   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Subscription
+  subscriptionId    String?       @unique
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  // Relations
+  members           HotelMember[]
+  roomTypes         RoomType[]
+  dailyKpis         DailyKPI[]
+  monthlyKpis       MonthlyKPI[]
+  financialRecords  FinancialRecord[]
+  operationalData   OperationalRecord[]
+  guestRecords      GuestRecord[]
+  guestReviews      GuestReview[]
+  integrations      Integration[]
+  aiInsights        AIInsight[]
+  manualEntries     ManualEntry[]
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+  invitations       Invitation[]
+
+  @@map("hotels")
+}
+
+model HotelMember {
+  id        String     @id @default(cuid())
+  userId    String
+  hotelId   String
+  role      HotelRole  @default(VIEWER)
+  joinedAt  DateTime   @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, hotelId])
+  @@map("hotel_members")
+}
+
+model Invitation {
+  id        String      @id @default(cuid())
+  email     String
+  hotelId   String
+  role      HotelRole   @default(VIEWER)
+  token     String      @unique @default(cuid())
+  expiresAt DateTime
+  accepted  Boolean     @default(false)
+  createdAt DateTime    @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("invitations")
+}
+
+enum HotelRole {
+  OWNER
+  ADMIN
+  MANAGER
+  RECEPTIONIST
+  VIEWER
+}
+
+// ============================================================
+// Subscriptions & Billing (Stripe)
+// ============================================================
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  stripeCustomerId     String             @unique
+  stripeSubscriptionId String?            @unique
+  stripePriceId        String?
+  plan                 SubscriptionPlan   @default(STARTER)
+  status               SubscriptionStatus @default(TRIALING)
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  trialEnd             DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  // Relations
+  hotel    Hotel?
+  invoices Invoice[]
+
+  @@map("subscriptions")
+}
+
+model Invoice {
+  id               String   @id @default(cuid())
+  subscriptionId   String
+  stripeInvoiceId  String   @unique
+  amount           Int      // in cents
+  currency         String   @default("eur")
+  status           String   // paid, open, void, uncollectible
+  invoiceUrl       String?
+  pdfUrl           String?
+  periodStart      DateTime
+  periodEnd        DateTime
+  createdAt        DateTime @default(now())
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@map("invoices")
+}
+
+enum SubscriptionPlan {
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  INCOMPLETE
+}
+
+// ============================================================
+// Hotel Data Models
+// ============================================================
+
+model RoomType {
+  id          String  @id @default(cuid())
+  hotelId     String
+  name        String
+  count       Int
+  basePrice   Float
+  description String?
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("room_types")
+}
+
+model DailyKPI {
+  id              String   @id @default(cuid())
+  hotelId         String
+  date            DateTime @db.Date
+  occupancyRate   Float
+  adr             Float
+  revpar          Float
+  totalRevenue    Float
+  roomRevenue     Float
+  fbRevenue       Float
+  otherRevenue    Float
+  roomsSold       Int
+  roomsAvailable  Int
+  arrivals        Int
+  departures      Int
+  stayovers       Int
+  noShows         Int
+  cancellations   Int
+  walkIns         Int
+  averageLOS      Float
+  goppar          Float
+  createdAt       DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+  @@map("daily_kpis")
+}
+
+model MonthlyKPI {
+  id                      String   @id @default(cuid())
+  hotelId                 String
+  date                    DateTime @db.Date
+  month                   String
+  year                    Int
+  occupancyRate           Float
+  adr                     Float
+  revpar                  Float
+  totalRevenue            Float
+  roomRevenue             Float
+  fbRevenue               Float
+  otherRevenue            Float
+  roomsSold               Int
+  roomsAvailable          Int
+  arrivals                Int
+  departures              Int
+  stayovers               Int
+  noShows                 Int
+  cancellations           Int
+  walkIns                 Int
+  averageLOS              Float
+  goppar                  Float
+  totalNightsAvailable    Int
+  totalNightsSold         Int
+  trevpar                 Float
+  cpor                    Float
+  laborCostRatio          Float
+  energyCostRatio         Float
+  guestSatisfactionScore  Float
+  onlineReviewScore       Float
+  repeatGuestRate         Float
+  directBookingRate       Float
+  otaBookingRate          Float
+  createdAt               DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+  @@map("monthly_kpis")
+}
+
+model FinancialRecord {
+  id        String   @id @default(cuid())
+  hotelId   String
+  date      DateTime @db.Date
+
+  // Revenue
+  revenueRooms          Float @default(0)
+  revenueFoodBeverage   Float @default(0)
+  revenueSpa            Float @default(0)
+  revenueEvents         Float @default(0)
+  revenueParking        Float @default(0)
+  revenueMinibar        Float @default(0)
+  revenueLaundry        Float @default(0)
+  revenueOther          Float @default(0)
+  revenueTotal          Float @default(0)
+
+  // Expenses
+  expenseSalaries       Float @default(0)
+  expenseUtilities      Float @default(0)
+  expenseMaintenance    Float @default(0)
+  expenseSupplies       Float @default(0)
+  expenseMarketing      Float @default(0)
+  expenseCommissions    Float @default(0)
+  expenseInsurance      Float @default(0)
+  expenseTaxes          Float @default(0)
+  expenseDepreciation   Float @default(0)
+  expenseOther          Float @default(0)
+  expenseTotal          Float @default(0)
+
+  // Profit
+  grossProfit           Float @default(0)
+  operatingProfit       Float @default(0)
+  netProfit             Float @default(0)
+  grossMargin           Float @default(0)
+  operatingMargin       Float @default(0)
+  netMargin             Float @default(0)
+  ebitda                Float @default(0)
+
+  // Cashflow
+  cashflowOpening       Float @default(0)
+  cashflowInflows       Float @default(0)
+  cashflowOutflows      Float @default(0)
+  cashflowClosing       Float @default(0)
+  bankBalance           Float @default(0)
+
+  createdAt DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+  @@map("financial_records")
+}
+
+model OperationalRecord {
+  id      String   @id @default(cuid())
+  hotelId String
+  date    DateTime @db.Date
+
+  // Housekeeping
+  roomsCleaned      Int   @default(0)
+  roomsPending      Int   @default(0)
+  roomsInspected    Int   @default(0)
+  averageCleanTime  Float @default(0)
+  hkStaffOnDuty     Int   @default(0)
+  lateCheckouts     Int   @default(0)
+  earlyCheckins     Int   @default(0)
+
+  // Maintenance
+  openTickets        Int   @default(0)
+  closedTickets      Int   @default(0)
+  avgResolutionTime  Float @default(0)
+  preventiveTasks    Int   @default(0)
+  urgentIssues       Int   @default(0)
+  roomsOutOfOrder    Int   @default(0)
+
+  // Staff
+  totalEmployees  Int   @default(0)
+  onDutyToday     Int   @default(0)
+  onLeave         Int   @default(0)
+  overtime        Int   @default(0)
+  staffSatisfaction Float @default(0)
+  turnoverRate    Float @default(0)
+
+  createdAt DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+  @@map("operational_records")
+}
+
+model GuestRecord {
+  id             String   @id @default(cuid())
+  hotelId        String
+  date           DateTime @db.Date
+
+  totalGuests     Int @default(0)
+  newGuests       Int @default(0)
+  returningGuests Int @default(0)
+  vipGuests       Int @default(0)
+
+  // Satisfaction
+  satisfactionScore Float @default(0)
+  reviewCount       Int   @default(0)
+
+  createdAt DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+  @@map("guest_records")
+}
+
+model GuestReview {
+  id        String   @id @default(cuid())
+  hotelId   String
+  guest     String
+  channel   String
+  rating    Float
+  comment   String   @db.Text
+  sentiment String   // positive, neutral, negative
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("guest_reviews")
+}
+
+model Integration {
+  id          String   @id @default(cuid())
+  hotelId     String
+  name        String
+  type        String   // pms, bank, ota, accounting, pos, crm, channel_manager
+  provider    String
+  status      String   @default("disconnected") // connected, disconnected, error, syncing
+  lastSync    DateTime?
+  nextSync    DateTime?
+  config      Json?
+  dataPoints  String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("integrations")
+}
+
+model AIInsight {
+  id          String   @id @default(cuid())
+  hotelId     String
+  category    String   // kpi, financial, operational, revenue, guest
+  type        String   // alert, recommendation, prediction, anomaly
+  severity    String   // info, warning, critical, success
+  title       String
+  description String   @db.Text
+  metric      String?
+  value       Float?
+  trend       String?  // up, down, stable
+  actionItems String[]
+  dismissed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("ai_insights")
+}
+
+model ManualEntry {
+  id        String   @id @default(cuid())
+  hotelId   String
+  userId    String
+  category  String
+  field     String
+  value     String
+  date      DateTime @db.Date
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@map("manual_entries")
+}
+
+// ============================================================
+// System
+// ============================================================
+
+model Notification {
+  id        String   @id @default(cuid())
+  hotelId   String
+  type      String   // info, warning, critical, success
+  title     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  hotelId   String?
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  hotel Hotel? @relation(fields: [hotelId], references: [id], onDelete: SetNull)
+  user  User?  @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
